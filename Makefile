@@ -1,7 +1,7 @@
 
 # Define a list of all C and Assemnbly source files
 CXX_SRC =
-ASM_SRC = main.s gloop.s
+ASM_SRC = main.s gloop.s data.s
 HEADERS =
 
 
@@ -88,7 +88,7 @@ verify: ${DUMP_DIR}/firmware.bin
 
 # Run the simulator
 run ${RUN_FILES}: ${OUTPUT} ${DUMP_DIR}/vectors.bin
-	./mapache64emu ${OUTPUT}
+	mapache64emu ${OUTPUT}
 
 
 # Combine the three binaries output by ld65 into one unified memory map for py65

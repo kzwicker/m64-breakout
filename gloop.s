@@ -1,18 +1,18 @@
 .export _do_logic
-.include "hardware.inc"
 
-.import batx
+.include "hardware.inc"
+.include "data.inc"
 
 Speed = 4
 BatWidth = 24
 
 .proc _do_logic
-    jsr controller_check
+    jsr move_bat
     rts
 .endproc
 
 
-controller_check:
+move_bat:
     lda _CONTROLLER_1
     bit #CONTROLLER_LEFT_MASK
     beq @left_not_pressed
@@ -42,3 +42,6 @@ controller_check:
     sta batx
 @right_not_pressed:
     rts
+
+move_ball:
+    lda balldir
