@@ -11,13 +11,13 @@
 batx:
     .res 1
 ballx:
-    .res 1
+    .res 2
 bally:
-    .res 1
+    .res 2
 ballxvel:
-    .res 1
+    .res 2
 ballyvel:
-    .res 1
+    .res 2
 balldir:
     .res 1
 

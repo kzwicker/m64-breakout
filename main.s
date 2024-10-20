@@ -8,9 +8,11 @@ BatStartX = 116
 BatStartY = 230
 BallStartX = 124
 BallStartY = 200
-BallStartXVel = $30
-BallStartYVel = $30
+BallStartXVel = $0300
+BallStartYVel = $0300
 BallStartDir = %00000010 ; bit 0: x sign, bit 1: y sign
+BatPatternNo = 0
+BallPatternNo = 1
 
 
 .segment "CODE"
@@ -19,13 +21,13 @@ BallStartDir = %00000010 ; bit 0: x sign, bit 1: y sign
     lda #$ff
 
     .repeat 16, I
-    sta _PMF+I ; sprite pattern 0
+    sta _PMF+.sizeof(pattern_t)*BatPatternNo+I ; sprite pattern 0
     .endrepeat
 
     ldx #$00
 @pat1loop:
     lda ballpat,x
-    sta _PMF+16,x ; sprite pattern 1
+    sta _PMF+.sizeof(pattern_t)*BallPatternNo,x ; sprite pattern 1
     inx
     cpx #16
     bne @pat1loop
@@ -48,9 +50,9 @@ bat:
     sta _OBM+.sizeof(object_s)*2+object_s::xpos
 
 ball:
-    lda ballx
+    lda ballx+1
     sta _OBM+.sizeof(object_s)*3+object_s::xpos
-    lda bally
+    lda bally+1
     sta _OBM+.sizeof(object_s)*3+object_s::ypos
 
     rts
@@ -74,18 +76,28 @@ reset_game:
     stz _OBM+.sizeof(object_s)*2+object_s::pattern_config
 
     ; set up data for ball sprite
-    lda #BallStartX
+    lda #<BallStartX
     sta ballx
-    lda #BallStartY
+    lda #>BallStartX
+    sta ballx+1
+    lda #<BallStartY
     sta bally
+    lda #>BallStartY
+    sta bally+1
     lda #RED
     sta _OBM+.sizeof(object_s)*3+object_s::color
     lda #$01
     sta _OBM+.sizeof(object_s)*3+object_s::pattern_config
-    lda #BallStartXVel
+
+    ; set up velocities
+    lda #<BallStartXVel
     sta ballxvel
-    lda #BallStartYVel
+    lda #>BallStartXVel
+    sta ballxvel+1
+    lda #<BallStartYVel
     sta ballyvel
+    lda #>BallStartYVel
+    sta ballyvel+1
     lda #BallStartDir
     sta balldir
 
