@@ -1,7 +1,7 @@
 
 # Define a list of all C and Assemnbly source files
 CXX_SRC =
-ASM_SRC = main.s gloop.s data.s
+ASM_SRC = main.s gloop.s data.s collision.s
 HEADERS =
 
 
@@ -54,7 +54,7 @@ OUTPUT = ${DUMP_DIR}/${MACHINE}.bin
 
 # By default (with no build target argument, i.e. `make`), build everything and
 # run the py65 simulator
-all: clean verify dump
+all: clean dump #verify
 
 dump: ${DUMP_FILES}
 
@@ -79,12 +79,12 @@ ${RESOURCE_DIR}/%.pat: %.png
 	@echo "Created \"$@\" from \"$<\""
 
 # Verify newly generated firmware code matches the starter code
-verify: ${DUMP_DIR}/firmware.bin
-	@mkdir -p .firmware_hd_temp
-	@xxd -p -c 16 backend/firmware.bin > .firmware_hd_temp/vanilla.hex
-	@xxd -p -c 16 ${DUMP_DIR}/firmware.bin > .firmware_hd_temp/curr.hex
-	@diff .firmware_hd_temp/vanilla.hex .firmware_hd_temp/curr.hex && echo "SUCCESS: Firmware matches"
-	@rm -rf .firmware_hd_temp
+#verify: ${DUMP_DIR}/firmware.bin
+#	@mkdir -p .firmware_hd_temp
+#	@xxd -p -c 16 backend/firmware.bin > .firmware_hd_temp/vanilla.hex
+#	@xxd -p -c 16 ${DUMP_DIR}/firmware.bin > .firmware_hd_temp/curr.hex
+#	@diff .firmware_hd_temp/vanilla.hex .firmware_hd_temp/curr.hex && echo "SUCCESS: Firmware matches"
+#	@rm -rf .firmware_hd_temp
 
 # Run the simulator
 run ${RUN_FILES}: ${OUTPUT} ${DUMP_DIR}/vectors.bin

@@ -1,17 +1,21 @@
 .export _do_logic
+    
+.import collide_wall
+.import reset_game
 
 .include "hardware.inc"
 .include "data.inc"
 
-Speed = 4
-BatSpeed = $30
-BatWidth = 24
-BallWidth = 8
-
 .proc _do_logic
     jsr move_bat
     jsr move_ball
-    jsr collide_ball
+    jsr collide_wall
+
+    beq no_reset ; if collide_wall returns 1, reset the game
+
+    jsr reset_game
+
+no_reset:
     rts
 .endproc
 
@@ -94,40 +98,3 @@ move_ball:
     sta bally+1
 
     rts    
-
-
-collide_ball:
-    lda balldir
-    bit #%00000001
-    bne @check_left
-
-@check_right:
-    lda ballx+1
-    cmp #GameWidth-BallWidth
-    bcc @check_vertical_collision
-
-    lda #0
-    sta ballx
-    lda #GameWidth-BallWidth
-    sta ballx+1
-    bra @flipx
-
-
-@check_left:
-    lda ballx+1
-    cmp #GameWidth-4
-    bcc @check_vertical_collision
-
-    lda #0
-    sta ballx
-    lda #0
-    sta ballx+1
-
-@flipx:
-    lda balldir
-    eor #%00000001
-    sta balldir
-
-
-@check_vertical_collision:
-    rts
