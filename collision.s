@@ -1,9 +1,12 @@
 .export collide_wall
+.export collide_bat
+
+.import move_ball
 
 .include "hardware.inc"
 .include "data.inc"
 
-collide_wall: ; returns 0 if play continues, returns 1 if game should restart
+collide_wall: ; returns 0 in A if play continues, returns 1 in A if game should restart
     lda balldir
     bit #%00000001
     bne @check_left
@@ -45,7 +48,7 @@ collide_wall: ; returns 0 if play continues, returns 1 if game should restart
     cmp #GameHeight-BallHeight
     bcc @end
 
-    lda #$01 ; reset if ball goes out of bounds
+    lda #$01 ; reset if ball goes out of lower bound
     rts
 
 @check_top:
@@ -64,4 +67,48 @@ collide_wall: ; returns 0 if play continues, returns 1 if game should restart
 
 @end:
     lda #$00
+    rts
+
+collide_bat:
+    lda bally+1
+    cmp #BatStartY-BallHeight ; check upper bound of bat
+    bcc @end
+
+    lda ballx+1
+    clc
+    adc #BallWidth ; check left bound of bat
+    cmp batx
+    bcc @end
+
+    sec
+    sbc #BallWidth+BatWidth-1 ; check right bound of bat
+    cmp batx
+    bcs @end
+    
+@hit:
+    clc
+    adc #BallWidth+BatWidth-1
+    sec
+    sbc batx
+    tax ; store position of ball relative to bat in x
+
+    lda balldir
+    eor #%00000011
+    sta balldir
+    jsr move_ball ; get ball out of bat by reversing mvmt
+
+    lda ballxlowveltable,x
+    sta ballxvel
+    lda ballxhighveltable,x
+    sta ballxvel+1
+
+    lda ballylowveltable,x
+    sta ballyvel
+    lda ballyhighveltable,x
+    sta ballyvel+1
+
+    lda balldirtable,x
+    sta balldir
+
+@end:
     rts

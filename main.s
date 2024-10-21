@@ -6,17 +6,6 @@
 .include "hardware.inc"
 .include "data.inc"
 
-BatStartX = 116
-BatStartY = 230
-BallStartX = 124 << 8
-BallStartY = 200 << 8
-BallStartXVel = $0300
-BallStartYVel = $0300
-BallStartDir = %00000010 ; bit 0: x sign, bit 1: y sign
-BatPatternNo = 0
-BallPatternNo = 1
-
-
 .segment "CODE"
 
 .proc _reset

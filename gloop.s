@@ -1,6 +1,8 @@
 .export _do_logic
+.export move_ball
     
 .import collide_wall
+.import collide_bat
 .import reset_game
 
 .include "hardware.inc"
@@ -9,13 +11,13 @@
 .proc _do_logic
     jsr move_bat
     jsr move_ball
+
     jsr collide_wall
-
     beq no_reset ; if collide_wall returns 1, reset the game
-
     jsr reset_game
-
 no_reset:
+
+    jsr collide_bat
     rts
 .endproc
 
