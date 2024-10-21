@@ -2,7 +2,7 @@
 # Define a list of all C and Assemnbly source files
 CXX_SRC =
 ASM_SRC = main.s gloop.s data.s collision.s
-HEADERS =
+HEADERS = hardware.inc data.inc
 
 
 # List of PNG images used for patterns
