@@ -3,7 +3,7 @@
     
 .import collide_wall
 .import collide_bat
-.import reset_game
+.import soft_reset
 
 .include "hardware.inc"
 .include "data.inc"
@@ -14,7 +14,7 @@
 
     jsr collide_wall
     beq no_reset ; if collide_wall returns 1, reset the game
-    jsr reset_game
+    jsr soft_reset
 no_reset:
 
     jsr collide_bat
