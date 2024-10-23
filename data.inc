@@ -10,6 +10,7 @@
 .global ballylowveltable
 .global ballyhighveltable
 .global balldirtable
+.global brickstates
 
 Speed = 4
 BallSpeed = $0300
@@ -23,6 +24,10 @@ BallStartX = 124 << 8
 BallStartY = 180 << 8
 BallStartXVel = $0000
 BallStartYVel = $0200
-BallStartDir = %00000000 ; bit 0: x sign, bit 1: y sign
+BallStartDir = %00 ; bit 0: x sign, bit 1: y sign
 BatPatternNo = 0
 BallPatternNo = 1
+BGPatternNo = 0
+BrickPatternNo = 1
+BrickStart = 1 ; row number in tiles of first line of bricks
+BrickEnd = 5 ; row number in tiles after bricks

@@ -1,3 +1,4 @@
+.include "hardware.inc"
 .include "data.inc"
 
 .segment "BSS"
@@ -13,6 +14,8 @@ ballyvel:
     .res 2
 balldir:
     .res 1
+brickstates:
+    .res GameWidth/8 * (BrickEnd-BrickStart)
 
 .segment "DATA"
 ballpat:
@@ -58,11 +61,11 @@ ballyhighveltable:
 
 balldirtable:
     .repeat CasesPerSide
-    .byte %00000011
+    .byte %11
     .endrepeat
 
     .repeat CasesPerSide
-    .byte %00000010
+    .byte %10
     .endrepeat
 
 

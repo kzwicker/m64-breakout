@@ -12,13 +12,21 @@
     lda #$ff
 
     .repeat 16, I
-    sta _PMF+.sizeof(pattern_t)*BatPatternNo+I ; sprite pattern 0
+    sta _PMF+.sizeof(pattern_t)*BatPatternNo+I ; bat sprite
+    .endrepeat
+
+    .repeat 16, I
+    sta _PMB+.sizeof(pattern_t)*BrickPatternNo+I ; brick background
+    .endrepeat
+
+    .repeat 16, I
+    stz _PMB+I
     .endrepeat
 
     ldx #$00
 @pat1loop:
     lda ballpat,x
-    sta _PMF+.sizeof(pattern_t)*BallPatternNo,x ; sprite pattern 1
+    sta _PMF+.sizeof(pattern_t)*BallPatternNo,x ; ball sprite
     inx
     cpx #16
     bne @pat1loop
@@ -40,11 +48,14 @@
     stz _OBM+.sizeof(object_s)*2+object_s::pattern_config
 
     ; set up data for ball sprite
-    lda #RED
+    lda #BLUE
     sta _OBM+.sizeof(object_s)*3+object_s::color
     lda #$01
     sta _OBM+.sizeof(object_s)*3+object_s::pattern_config
-
+    
+    ; set up background
+    lda #WHITE
+    sta _background_palette
 
     jsr soft_reset
 
@@ -68,6 +79,16 @@ ball:
     sta _OBM+.sizeof(object_s)*3+object_s::xpos
     lda bally+1
     sta _OBM+.sizeof(object_s)*3+object_s::ypos
+
+bricks:
+    ldx #$00
+@brick_loop:
+    lda brickstates,x
+    sta _NTBL+BrickStart*(GameWidth/8),x
+    inx
+    cpx GameWidth/8 * (BrickEnd-BrickStart)
+    bne @brick_loop
+
 
     rts
 .endproc
@@ -94,5 +115,14 @@ soft_reset:
     sta ballyvel+1
     lda #BallStartDir
     sta balldir
+
+    ; set up bricks
+    ldx #$00
+    lda #BrickPatternNo
+@brick_loop:
+    sta brickstates,x
+    inx
+    cpx GameWidth/8 * (BrickEnd-BrickStart)
+    bne @brick_loop
 
     rts
