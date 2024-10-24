@@ -2,7 +2,8 @@
 # Define a list of all C and Assemnbly source files
 CXX_SRC =
 ASM_SRC = main.s gloop.s data.s collision.s
-HEADERS = hardware.inc data.inc
+HEADERS =
+ASM_HEADERS = hardware.inc data.inc
 
 
 # List of PNG images used for patterns
@@ -123,7 +124,7 @@ ${BUILD_DIR}/%.c.o: %.c ${HEADERS}
 	$(AS) $(ASFLAGS) ${BUILD_DIR}/$(<:.c=.c.s) -o $@
 
 # Override the default/implicit *.s assembly rule to use the ca65 syntax
-${BUILD_DIR}/%.s.o: %.s ${RESOURCES}
+${BUILD_DIR}/%.s.o: %.s ${RESOURCES} ${ASM_HEADERS}
 	@mkdir -p $(dir $@)
 	$(AS) --bin-include-dir ${RESOURCE_DIR} $(ASFLAGS) $< -o $@
 

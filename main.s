@@ -86,7 +86,7 @@ bricks:
     lda brickstates,x
     sta _NTBL+BrickStart*(GameWidth/8),x
     inx
-    cpx GameWidth/8 * (BrickEnd-BrickStart)
+    cpx #GameWidth/8 * (BrickEnd-BrickStart)
     bne @brick_loop
 
 
@@ -122,7 +122,7 @@ soft_reset:
 @brick_loop:
     sta brickstates,x
     inx
-    cpx GameWidth/8 * (BrickEnd-BrickStart)
+    cpx #GameWidth/8 * (BrickEnd-BrickStart)
     bne @brick_loop
 
     rts

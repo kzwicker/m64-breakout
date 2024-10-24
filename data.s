@@ -28,44 +28,178 @@ ballpat:
     .byte %01111111, %11111101
     .byte %00011011, %11100100
 
-CasesPerSide = BatWidth/2+BallWidth/2 ; number of positions the ball can have relative to the bat on either side
-    
+; table of ball velocities and directions from python script
 ballxlowveltable:
-    .repeat CasesPerSide, I
-    .byte <(BallSpeed * (CasesPerSide-I) / CasesPerSide) 
-    .endrepeat
-    
-    .repeat CasesPerSide, I
-    .byte <(BallSpeed * I / CasesPerSide) 
-    .endrepeat
-
+    .byte $ae
+    .byte $a5
+    .byte $9a
+    .byte $8e
+    .byte $7f
+    .byte $6d
+    .byte $57
+    .byte $3e
+    .byte $1f
+    .byte $f9
+    .byte $cc
+    .byte $97
+    .byte $57
+    .byte $0d
+    .byte $ba
+    .byte $5f
+    .byte $00
+    .byte $5f
+    .byte $ba
+    .byte $0d
+    .byte $57
+    .byte $97
+    .byte $cc
+    .byte $f9
+    .byte $1f
+    .byte $3e
+    .byte $57
+    .byte $6d
+    .byte $7f
+    .byte $8e
+    .byte $9a
+    .byte $a5
+    .byte $ae
 
 ballxhighveltable:
-    .repeat CasesPerSide, I
-    .byte >(BallSpeed * (CasesPerSide-I) / CasesPerSide) 
-    .endrepeat
-    
-    .repeat CasesPerSide, I
-    .byte >(BallSpeed * I / CasesPerSide) 
-    .endrepeat
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $00
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
 
 ballylowveltable:
-    .repeat CasesPerSide*2
-    .byte 0
-    .endrepeat
+    .byte $57
+    .byte $69
+    .byte $7d
+    .byte $92
+    .byte $aa
+    .byte $c3
+    .byte $df
+    .byte $fe
+    .byte $1f
+    .byte $41
+    .byte $66
+    .byte $8b
+    .byte $ae
+    .byte $cf
+    .byte $e9
+    .byte $fa
+    .byte $00
+    .byte $fa
+    .byte $e9
+    .byte $cf
+    .byte $ae
+    .byte $8b
+    .byte $66
+    .byte $41
+    .byte $1f
+    .byte $fe
+    .byte $df
+    .byte $c3
+    .byte $aa
+    .byte $92
+    .byte $7d
+    .byte $69
+    .byte $57
 
 ballyhighveltable:
-    .repeat CasesPerSide*2
-    .byte 2
-    .endrepeat
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $03
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $02
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
+    .byte $01
 
 balldirtable:
-    .repeat CasesPerSide
     .byte %11
-    .endrepeat
-
-    .repeat CasesPerSide
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
+    .byte %11
     .byte %10
-    .endrepeat
-
-
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10
+    .byte %10

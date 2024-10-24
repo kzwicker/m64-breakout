@@ -86,7 +86,7 @@ collide_bat:
     bcs @end
     
 @hit:
-    clc
+    clc 
     adc #BallWidth+BatWidth-1
     sec
     sbc batx

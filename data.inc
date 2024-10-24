@@ -29,5 +29,5 @@ BatPatternNo = 0
 BallPatternNo = 1
 BGPatternNo = 0
 BrickPatternNo = 1
-BrickStart = 1 ; row number in tiles of first line of bricks
-BrickEnd = 5 ; row number in tiles after bricks
+BrickStart = 2 ; row number in tiles of first line of bricks
+BrickEnd = 8 ; row number in tiles after bricks
